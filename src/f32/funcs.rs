@@ -43,6 +43,44 @@ pub fn scalar_acos(value: f32) -> f32 {
     }
 }
 
+#[inline]
+pub fn scalar_atan(z: f32) -> f32 {
+    // https://www.dsprelated.com/showarticle/1052.php
+    const N1: f32 = 0.97239411;
+    const N2: f32 = -0.19194795;
+    (N1 + N2 * z * z) * z
+}
+
+pub fn scalar_atan2(y: f32, x: f32) -> f32 {
+    // https://www.dsprelated.com/showarticle/1052.php
+    use std::f32::consts::{PI, FRAC_PI_2};
+    if x != 0.0 {
+        if x.abs() > y.abs() {
+            let z = y / x;
+            if x > 0.0 {
+                scalar_atan(z)
+            } else if y >= 0.0 {
+                scalar_atan(z) + PI
+            } else {
+                scalar_atan(z) - PI
+            }
+        } else {
+            let z = x / y;
+            if y > 0.0 {
+                -scalar_atan(z) + FRAC_PI_2
+            } else {
+                scalar_atan(z) - FRAC_PI_2
+            }
+        }
+    } else if y > 0.0 {
+        FRAC_PI_2
+    } else if y < 0.0 {
+        -FRAC_PI_2
+    } else {
+        0.0
+    }
+}
+
 #[cfg(all(target_feature = "sse2", not(feature = "scalar-math")))]
 pub(crate) mod sse2 {
     #[cfg(target_arch = "x86")]

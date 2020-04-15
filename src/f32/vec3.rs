@@ -794,7 +794,7 @@ impl Vec3 {
     /// Returns the angle between two vectors, in radians.
     #[inline]
     pub fn angle(self, other: Self) -> f32 {
-        f32::atan2(self.cross(other).length(), self.dot(other))
+        crate::f32::funcs::scalar_atan2(self.cross(other).length(), self.dot(other))
     }
 }
 

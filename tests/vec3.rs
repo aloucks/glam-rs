@@ -453,11 +453,11 @@ fn test_vec3_serde() {
 #[test]
 fn test_vec3_angle() {
     let angle = Vec3::new(1.0, 0.0, 1.0).angle(Vec3::new(1.0, 1.0, 0.0));
-    assert_approx_eq!(f32::consts::FRAC_PI_3, angle);
+    assert_approx_eq!(f32::consts::FRAC_PI_3, angle, 0.005);
 
     let angle = Vec3::new(10.0, 0.0, 10.0).angle(Vec3::new(5.0, 5.0, 0.0));
-    assert_approx_eq!(f32::consts::FRAC_PI_3, angle);
+    assert_approx_eq!(f32::consts::FRAC_PI_3, angle, 0.005);
 
     let angle = Vec3::new(-1.0, 0.0, -1.0).angle(Vec3::new(1.0, -1.0, 0.0));
-    assert_approx_eq!(2.0 * f32::consts::FRAC_PI_3, angle);
+    assert_approx_eq!(2.0 * f32::consts::FRAC_PI_3, angle, 0.005);
 }
